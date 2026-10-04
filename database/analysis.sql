@@ -3,28 +3,14 @@
 -- SQL BUSINESS ANALYSIS
 -- ============================================================
 
--- Purpose:
--- This file contains SQL analyses designed to answer
--- business questions related to customers, accounts,
--- transactions, investments, savings goals and market data.
---
 -- Database: PostgreSQL
--- ============================================================
 
 
 -- ============================================================
 -- 1. CUSTOMER ANALYSIS
 -- ============================================================
 
-
--- 1.1 Customers by customer segment
---
--- Business question:
--- How are customers distributed across customer segments?
---
--- Use:
--- Helps the bank understand the size of each customer segment.
--- ============================================================
+-- 1.1 How are customers distributed across customer segments?
 
 SELECT
     customer_segment,
@@ -34,15 +20,7 @@ GROUP BY customer_segment
 ORDER BY number_of_customers DESC;
 
 
--- 1.2 Customers by risk profile
---
--- Business question:
--- How are customers distributed across risk profiles?
---
--- Use:
--- Helps the bank understand the composition of its
--- customer base from an investment-risk perspective.
--- ============================================================
+-- 1.2 How are customers distributed across risk profiles?
 
 SELECT
     risk_profile,
@@ -52,14 +30,7 @@ GROUP BY risk_profile
 ORDER BY number_of_customers DESC;
 
 
--- 1.3 Average income by customer segment
---
--- Business question:
--- Which customer segments have the highest average income?
---
--- Use:
--- Can support customer segmentation and financial analysis.
--- ============================================================
+-- 1.3 Which customer segments have the highest average income?
 
 SELECT
     customer_segment,
@@ -73,31 +44,14 @@ ORDER BY average_income DESC;
 -- 2. ACCOUNT ANALYSIS
 -- ============================================================
 
-
--- 2.1 Total balance in the bank
---
--- Business question:
--- What is the total balance held across all customer accounts?
---
--- Use:
--- Provides a high-level overview of total customer balances.
--- ============================================================
+-- 2.1 What is the total balance held across all customer accounts?
 
 SELECT
     ROUND(SUM(balance), 2) AS total_balance
 FROM Account;
 
 
--- 2.2 Average account balance by customer segment
---
--- Business question:
--- How does the average account balance differ between
--- customer segments?
---
--- Use:
--- Helps identify differences in financial position across
--- customer segments.
--- ============================================================
+-- 2.2 How does the average account balance differ between customer segments?
 
 SELECT
     c.customer_segment,
@@ -110,14 +64,7 @@ GROUP BY c.customer_segment
 ORDER BY average_balance DESC;
 
 
--- 2.3 Number of accounts by account type
---
--- Business question:
--- How many accounts exist for each account type?
---
--- Use:
--- Provides an overview of the bank's account portfolio.
--- ============================================================
+-- 2.3 How many accounts exist for each account type?
 
 SELECT
     account_type,
@@ -131,16 +78,7 @@ ORDER BY number_of_accounts DESC;
 -- 3. TRANSACTION ANALYSIS
 -- ============================================================
 
-
--- 3.1 Expenses by transaction category
---
--- Business question:
--- Which expense categories account for the largest
--- transaction amounts?
---
--- Use:
--- Helps identify major areas of customer spending.
--- ============================================================
+-- 3.1 Which expense categories account for the largest transaction amounts?
 
 SELECT
     category,
@@ -152,16 +90,7 @@ GROUP BY category
 ORDER BY total_amount DESC;
 
 
--- 3.2 Average expense by category
---
--- Business question:
--- What is the average transaction amount for each
--- expense category?
---
--- Use:
--- Helps distinguish frequent smaller expenses from
--- categories with larger individual transactions.
--- ============================================================
+-- 3.2 What is the average transaction amount for each expense category?
 
 SELECT
     category,
@@ -172,14 +101,7 @@ GROUP BY category
 ORDER BY average_expense DESC;
 
 
--- 3.3 Income versus expenses
---
--- Business question:
--- How do total income and total expenses compare?
---
--- Use:
--- Provides a high-level view of transaction flows.
--- ============================================================
+-- 3.3 How do total income and total expenses compare?
 
 SELECT
     transaction_type,
@@ -194,19 +116,7 @@ ORDER BY total_amount DESC;
 -- 4. INVESTMENT ANALYSIS
 -- ============================================================
 
-
--- 4.1 Investment value by sector
---
--- Business question:
--- Which sectors represent the largest investment values?
---
--- Calculation:
--- Investment value = quantity × purchase price
---
--- Use:
--- Helps the bank understand how customers' investments
--- are distributed across sectors.
--- ============================================================
+-- 4.1 Which sectors represent the largest investment values?
 
 SELECT
     sector,
@@ -217,15 +127,7 @@ GROUP BY sector
 ORDER BY invested_amount DESC;
 
 
--- 4.2 Investment value by risk profile
---
--- Business question:
--- How does investment activity differ between customer
--- risk profiles?
---
--- Use:
--- Connects customer characteristics with investment behavior.
--- ============================================================
+-- 4.2 How does investment activity differ between customer risk profiles?
 
 SELECT
     c.risk_profile,
@@ -238,14 +140,7 @@ GROUP BY c.risk_profile
 ORDER BY invested_amount DESC;
 
 
--- 4.3 Investment value by customer segment
---
--- Business question:
--- Which customer segments have the largest investment values?
---
--- Use:
--- Helps compare investment behavior between customer segments.
--- ============================================================
+-- 4.3 Which customer segments have the largest investment values?
 
 SELECT
     c.customer_segment,
@@ -269,16 +164,7 @@ ORDER BY total_invested_amount DESC;
 -- 5. SAVINGS ANALYSIS
 -- ============================================================
 
-
--- 5.1 Savings by goal type
---
--- Business question:
--- What are the average target and saved amounts for
--- different savings goals?
---
--- Use:
--- Helps the bank understand customers' savings priorities.
--- ============================================================
+-- 5.1 What are the average target and saved amounts for different savings goals?
 
 SELECT
     goal_name,
@@ -290,18 +176,7 @@ GROUP BY goal_name
 ORDER BY average_target DESC;
 
 
--- 5.2 Savings goal progress
---
--- Business question:
--- How close are customers to reaching their savings goals?
---
--- Calculation:
--- Progress = current amount / target amount × 100
---
--- Use:
--- Identifies which types of savings goals customers are
--- closest to completing.
--- ============================================================
+-- 5.2 How close are customers to reaching their savings goals?
 
 SELECT
     goal_name,
@@ -319,16 +194,7 @@ GROUP BY goal_name
 ORDER BY average_goal_progress_percent DESC;
 
 
--- 5.3 High-income customers with relatively low savings
---
--- Business question:
--- Which customers have above-average income but
--- below-average savings?
---
--- Use:
--- Creates a customer group that could be investigated
--- further in future analytical or AI models.
--- ============================================================
+-- 5.3 Which customers have above-average income but below-average savings?
 
 SELECT
     c.customer_id,
@@ -355,16 +221,7 @@ HAVING AVG(s.current_amount) < (
 ORDER BY average_saved ASC;
 
 
--- 5.4 Customers with both investments and savings goals
---
--- Business question:
--- How many customers are actively investing while
--- also maintaining savings goals?
---
--- Use:
--- Helps identify customers who use multiple financial
--- products.
--- ============================================================
+-- 5.4 How many customers are actively investing while also maintaining savings goals?
 
 SELECT
     c.customer_id,
@@ -386,15 +243,7 @@ HAVING COUNT(DISTINCT i.investment_id) > 0
 ORDER BY number_of_investments DESC;
 
 
--- 5.5 Savings progress by customer segment
---
--- Business question:
--- How far have customers in each customer segment
--- progressed toward their savings goals?
---
--- Use:
--- Helps compare savings behavior between customer segments.
--- ============================================================
+-- 5.5 How far have customers in each customer segment progressed toward their savings goals?
 
 SELECT
     c.customer_segment,
@@ -418,16 +267,7 @@ ORDER BY average_progress_percent DESC;
 -- 6. MARKET DATA ANALYSIS
 -- ============================================================
 
-
--- 6.1 Market data coverage by stock
---
--- Business question:
--- How much historical market data is available for each stock?
---
--- Use:
--- Helps validate the coverage of the market data used
--- in investment analysis.
--- ============================================================
+-- 6.1 How much historical market data is available for each stock?
 
 SELECT
     ticker,
@@ -439,15 +279,7 @@ GROUP BY ticker
 ORDER BY ticker;
 
 
--- 6.2 Latest stock price
---
--- Business question:
--- What is the latest available closing price for each stock?
---
--- Use:
--- Provides the current market price used in investment
--- valuation.
--- ============================================================
+-- 6.2 What is the latest available closing price for each stock?
 
 SELECT DISTINCT ON (ticker)
     ticker,
@@ -461,19 +293,7 @@ ORDER BY ticker, market_date DESC;
 -- 7. INVESTMENT PERFORMANCE ANALYSIS
 -- ============================================================
 
-
--- 7.1 Current value of investments
---
--- Business question:
--- What is the current market value of each investment?
---
--- Calculation:
--- Current value = quantity × latest market price
---
--- Use:
--- Compares the original purchase value with the current
--- estimated market value.
--- ============================================================
+-- 7.1 What is the current market value of each investment?
 
 SELECT
     i.investment_id,
@@ -503,19 +323,7 @@ JOIN (
 ORDER BY current_value DESC;
 
 
--- 7.2 Unrealized gain or loss
---
--- Business question:
--- Which investments currently have the largest
--- unrealized gains or losses?
---
--- Calculation:
--- Gain/loss = current value - purchase value
---
--- Use:
--- Provides an estimate of investment performance
--- based on the latest available market price.
--- ============================================================
+-- 7.2 Which investments currently have the largest unrealized gains or losses?
 
 SELECT
     i.customer_id,
@@ -546,18 +354,7 @@ JOIN (
 ORDER BY gain_loss DESC;
 
 
--- 7.3 Current investment value by sector
---
--- Business question:
--- Which sectors currently represent the largest
--- investment values?
---
--- Calculation:
--- Current value = quantity × latest market price
---
--- Use:
--- Shows the current sector exposure of customer investments.
--- ============================================================
+-- 7.3 Which sectors currently represent the largest investment values?
 
 SELECT
     i.sector,
