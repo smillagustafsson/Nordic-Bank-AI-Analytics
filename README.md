@@ -119,7 +119,7 @@ Pivot tables and visualizations are used to analyze:
 
 The Excel analysis provides a more ad-hoc and business-focused view of the underlying banking data.
 
-![Excel Dashboard](excel/bank_excel_dashboard.png.png)
+![Excel Dashboard](excel/bank_excel_dashboard.png)
 
 The complete Excel analysis is available in:
 excel/Nordic_Bank_Excel_Analysis.xlsx
