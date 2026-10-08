@@ -119,7 +119,7 @@ Pivot tables and visualizations are used to analyze:
 
 The Excel analysis provides a more ad-hoc and business-focused view of the underlying banking data.
 
-![Excel Dashboard](excel/excel_dashboard.png)
+![Excel Dashboard](https://github.com/smillagustafsson/Nordic-Bank-AI-Analytics/blob/main/excel/excel_dashboard.png?raw=true)
 
 The complete Excel analysis is available in:
 excel/Nordic_Bank_Excel_Analysis.xlsx
@@ -137,7 +137,7 @@ The dashboard includes:
 - Customer risk profile distribution
 - Account balance by customer segment
 
-![Power BI Dashboard](powerbi/powerbi_dashboard.png)
+![Power BI Dashboard](https://github.com/smillagustafsson/Nordic-Bank-AI-Analytics/blob/main/powerbi/powerbi_dashboard.png?raw=true)
 
 The complete Power BI report is available in:
 powerbi/Nordic_Bank_Dashboard.pbix
@@ -210,6 +210,7 @@ Generative AI
 - Llama 3.2
 
 ## Project Structure
+```
 Nordic-Bank-AI-Investment-Analytics/
 │
 ├── ai/
@@ -247,6 +248,7 @@ Nordic-Bank-AI-Investment-Analytics/
 ├── .gitignore
 ├── README.md
 └── requirements.txt
+```
 
 How to Run
 1. Create the PostgreSQL database
@@ -271,7 +273,6 @@ Run the relevant Python scripts in src/ to generate:
 
 5. Load the data into PostgreSQL
 Load the generated data into the corresponding PostgreSQL tables.
-
 Market data is retrieved using:
 src/fetch_market_data.py
 
