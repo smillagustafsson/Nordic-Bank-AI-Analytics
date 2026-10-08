@@ -119,7 +119,7 @@ Pivot tables and visualizations are used to analyze:
 
 The Excel analysis provides a more ad-hoc and business-focused view of the underlying banking data.
 
-![Excel Dashboard](https://github.com/smillagustafsson/Nordic-Bank-AI-Analytics/blob/main/excel/excel_dashboard.png?raw=true)
+![Excel Dashboard](../excel/excel_dashboard.png)
 
 The complete Excel analysis is available in:
 excel/Nordic_Bank_Excel_Analysis.xlsx
@@ -137,7 +137,7 @@ The dashboard includes:
 - Customer risk profile distribution
 - Account balance by customer segment
 
-![Power BI Dashboard](https://github.com/smillagustafsson/Nordic-Bank-AI-Analytics/blob/main/powerbi/powerbi_dashboard.png?raw=true)
+![Power BI Dashboard](../powerbi/powerbi_dashboard.png)
 
 The complete Power BI report is available in:
 powerbi/Nordic_Bank_Dashboard.pbix
