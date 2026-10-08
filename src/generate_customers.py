@@ -1,13 +1,29 @@
 import random
-import csv
+import getpass
+import psycopg
+
 
 # Antal kunder vi vill skapa
 NUMBER_OF_CUSTOMERS = 1000
 
-# Lista som ska innehålla alla kunder
-customers = []
+
+# Fråga efter PostgreSQL-lösenord
+password = getpass.getpass("Enter PostgreSQL password: ")
+
+
+# Anslut till PostgreSQL
+connection = psycopg.connect(
+    host="localhost",
+    port=5432,
+    dbname="nordic_bank",
+    user="postgres",
+    password=password
+)
+
 
 # Skapa kunder
+customers = []
+
 for customer_id in range(1, NUMBER_OF_CUSTOMERS + 1):
 
     # Slumpa ålder mellan 20 och 70
@@ -31,39 +47,37 @@ for customer_id in range(1, NUMBER_OF_CUSTOMERS + 1):
     else:
         customer_segment = "Mature Customer"
 
-    # Lägg till kunden i listan
-    customers.append({
-        "customer_id": customer_id,
-        "age": age,
-        "income": income,
-        "risk_profile": risk_profile,
-        "customer_segment": customer_segment
-    })
+    customers.append((
+        customer_id,
+        age,
+        income,
+        risk_profile,
+        customer_segment
+    ))
 
 
-# Sökväg till CSV-filen
-file_path = "Nordic-Bank-AI-Analytics/data/generated/customers.csv"
+# Lägg in kunderna direkt i PostgreSQL
+with connection:
 
-# Spara kunderna som CSV
-with open(file_path, "w", newline="", encoding="utf-8") as file:
+    with connection.cursor() as cursor:
 
-    writer = csv.DictWriter(
-        file,
-        fieldnames=[
-            "customer_id",
-            "age",
-            "income",
-            "risk_profile",
-            "customer_segment"
-        ]
-    )
-
-    # Skriver rubrikerna
-    writer.writeheader()
-
-    # Skriver alla kunder
-    writer.writerows(customers)
+        cursor.executemany(
+            """
+            INSERT INTO Customer (
+                customer_id,
+                age,
+                income,
+                risk_profile,
+                customer_segment
+            )
+            VALUES (%s, %s, %s, %s, %s)
+            """,
+            customers
+        )
 
 
-print(f"{NUMBER_OF_CUSTOMERS} customers generated!")
-print(f"Saved to: {file_path}")
+# Stäng anslutningen
+connection.close()
+
+
+print(f"Successfully generated and loaded {len(customers)} customers into PostgreSQL.")
